@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 from selenium import webdriver
 import pandas as pd
 import psycopg2
@@ -7,7 +9,6 @@ from bs4 import BeautifulSoup
 import platform
 import time
 from sqlalchemy import create_engine
-import time
 
 username = 'tyoung12290'
 password = 'Tjytjy90'

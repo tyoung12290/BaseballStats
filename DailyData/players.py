@@ -18,7 +18,12 @@ username = 'tyoung12290'
 password = 'Tjytjy90'
 ts = time.time()*1000
 stats = DataFrame()
-baseUrl = "https://rotogrinders.com/pages/mlb-pitcher-hub-sp-salary-charts-260515"
+#need to loop per team with lookups for city abbrev and city-team
+playerUrl = "http://www.espn.com/mlb/team/roster/_/name/stl/st-louis-cardinals"
+#need to check numeric code at end of url tomorrow might need to find a better site
+pitcherUrl = "https://rotogrinders.com/pages/mlb-pitcher-hub-sp-salary-charts-260515"
+hitterUrl = "https://rotogrinders.com/pages/hitter-salary-charts-1274278"
+#to seperate table or attempt to update salary for players?
 Url = baseUrl
 print(Url)
 
