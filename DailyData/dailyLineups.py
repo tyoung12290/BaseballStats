@@ -37,13 +37,28 @@ stats['Teams'] = stats['Teams'].str.replace(' ','')
 teams = stats['Teams'].str.split('@').apply(Series, 1).stack()
 teams.index = teams.index.droplevel(-1) # to line up with df's index
 teams.name = 'Teams' # needs a name to join
+print (teams)
 
 #retrieve list of players
 #gather 1 player per position
 #retrieve there previous day scores
 #multiply by fanduel scoring
 
-# engine = create_engine('postgresql://tyoung12290:Tjytjy90@mlb.ck81qylct4si.us-east-2.rds.amazonaws.com:5432/MLB')
+engine = create_engine('postgresql://tyoung12290:Tjytjy90@mlb.ck81qylct4si.us-east-2.rds.amazonaws.com:5432/MLB')
+
+player_table = pd.read_sql_query('select * from "player_data"',con=engine)
+
+print (player_table)
+# meta = MetaData(db)
+# player_table = Table('films', meta,
+#                        Column('title', String),
+#                        Column('director', String),
+#                        Column('year', String))
 #
+# with db.connect() as conn:
+#     select_statement = film_table.select()
+#     result_set = conn.execute(select_statement)
+#     for r in result_set:
+#         print(r)
 # stats.to_sql("player_game_data",engine,if_exists='replace')
 #print("table to database")
