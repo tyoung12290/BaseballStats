@@ -11,33 +11,47 @@ import time
 #config section need to get rid of password
 username = 'tyoung12290'
 password = 'Tjytjy90'
-Url = "http://m.mlb.com/schedule/2018/07/19/"
+mlb_url = "http://m.mlb.com/schedule/2018/07/17/"
+espn_url = "http://www.espn.com/mlb/schedule/_/date/20180719"
 
 #Render webpage with PhantonJS and selenium
 #Phantom is the headless browser
 #Selenium is the driver
 driver = webdriver.PhantomJS()
 driver.set_window_size(1024, 768) # optional
-driver.get(Url)
+# driver.get(mlb_url)
+# time.sleep(1)
+#
+# #pandas read_html to find attribute indicating table and loads a list of DataFrames one per html table on page
+# mlb_games_list = pd.read_html(driver.page_source,attrs={'class': 'data schedule-list'} )
+# mlb_games = mlb_games_list[1]
+# print ('mlb')
+# print (mlb_games)
+driver.get(espn_url)
 time.sleep(1)
+espn_games_list = pd.read_html(driver.page_source,attrs={'class': 'schedule has-team-logos align-left'} )
+espn_games=espn_games_list[1]
+print ('espn')
 
-#pandas read_html to find attribute indicating table and loads a list of DataFrames one per html table on page
-stats_list = pd.read_html(driver.page_source,attrs={'class': 'data schedule-list'} )
-stats = stats_list[1]
+espn_games=espn_games.loc[:,'matchup':'Unnamed: 1']
+espn_games.columns=['away','home']
+espn_games['away']=espn_games['away'].str.split(' ')[-1]
 
+print(type(espn_games['away']))
 #cleanup table to get desired info
-cols = [1,2,3,4]
-stats.drop(stats.columns[[cols]],inplace=True,axis=1)
-#name columns something meaningful
-stats.columns=['Teams']
-#strips spaces
-stats['Teams'] = stats['Teams'].str.replace(' ','')
-#splits on @ sign and makes new rows per record
-#building team list to filter player table for active players for the day
-teams = stats['Teams'].str.split('@').apply(Series, 1).stack()
-teams.index = teams.index.droplevel(-1) # to line up with df's index
-teams.name = 'Teams' # needs a name to join
-print (teams)
+# cols = [1,2,3,4]
+# mlb_games.drop(mlb_games.columns[[cols]],inplace=True,axis=1)
+# #name columns something meaningful
+# mlb_games.columns=['Teams']
+# #strips spaces
+# mlb_games['Teams'] = mlb_games['Teams'].str.replace(' ','')
+# #splits on @ sign and makes new rows per record
+# #building team list to filter player table for active players for the day
+# mlb_teams = mlb_games['Teams'].str.split('@').apply(Series, 1).stack()
+# mlb_teams.name = 'Teams' # needs a name to join
+# print (teams)
+
+
 
 #retrieve list of players
 #gather 1 player per position
