@@ -35,7 +35,7 @@ print ('espn')
 
 espn_games=espn_games.loc[:,'matchup':'Unnamed: 1']
 espn_games.columns=['away','home']
-espn_games['away']=espn_games['away'].str.split(' ')[-1]
+espn_games['away']=espn_games['away'].str.split(' ')
 
 print(type(espn_games['away']))
 #cleanup table to get desired info
@@ -60,7 +60,7 @@ print(type(espn_games['away']))
 
 engine = create_engine('postgresql://tyoung12290:Tjytjy90@mlb.ck81qylct4si.us-east-2.rds.amazonaws.com:5432/MLB')
 
-player_table = pd.read_sql_query('select * from "player_data"',con=engine)
+player_table = pd.read_sql_query('select * from "player_game_data"',con=engine)
 
 print (player_table)
 # meta = MetaData(db)
